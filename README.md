@@ -1,4 +1,4 @@
 # bert
 Game objects are in the void.
 
-Put them in Doucuments\My Games\Bertrand\Universe
+Put them in Users\<username>\Doucuments\My Games\Bertrand\Universe
