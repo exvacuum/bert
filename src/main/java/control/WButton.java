@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class WButton extends MButton{
 
-    MetaWindow ownerWindow;
+    public MetaWindow ownerWindow;
 
     /**
      * Creates a button with specified dimensions

@@ -19,10 +19,12 @@ public class MetaWindow{
     public enum WindowType{
         DEFAULT,
         CMD,
-        PIP
+        PIP,
+        FILES
     }
 
     public static int nextid = 0;
+    public boolean resizable = true;
 
     String title = "";
     Font segoe = new Font("Segoe UI", Font.PLAIN, 12);

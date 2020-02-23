@@ -5,6 +5,7 @@ import control.MButton;
 import control.WButton;
 import ddf.minim.AudioPlayer;
 import world.interfaces.pc.CommandLine;
+import world.interfaces.pc.FileBrowser;
 import world.interfaces.pc.MetaWindow;
 import world.interfaces.pc.PIP;
 import world.objects.GameObject;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 public class PCInterface extends GameInterface implements Runnable{
 
     GameObject owner;
-    public BufferedImage biosLogo, intertiaStarLogo, taskbarlogo, cmdIcon, pipIcon;
+    public BufferedImage biosLogo, intertiaStarLogo, taskbarlogo, cmdIcon, pipIcon, fileIcon;
     public BufferedImage screenImg;
     String[] sysinfo;
     int lines = 0;
@@ -68,6 +69,7 @@ public class PCInterface extends GameInterface implements Runnable{
             taskbarlogo = ImageIO.read(App.getResourceAsFile("taskbarlogo.png"));
             cmdIcon = ImageIO.read(App.getResourceAsFile("cmdicon.png"));
             pipIcon = ImageIO.read(App.getResourceAsFile("pipicon.png"));
+            fileIcon = ImageIO.read(App.getResourceAsFile("fileicon.png"));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -191,7 +193,7 @@ public class PCInterface extends GameInterface implements Runnable{
         }
         if(windows.size()>0) {
             for (int j = 0; j < 4; j++) {
-                if (windows.get(windows.size() - 1).edgeHovers[j]) edgeHover[j] = true;
+                if (windows.get(windows.size() - 1).edgeHovers[j]&&windows.get(windows.size() - 1).resizable) edgeHover[j] = true;
             }
         }
         if((edgeHover[0]&&edgeHover[2])||(edgeHover[1]&&edgeHover[3])){
@@ -287,6 +289,20 @@ public class PCInterface extends GameInterface implements Runnable{
                                 showMenu = false;
                                 setDesktopState(DesktopState.DEFAULT);
                                 windows.add(new PIP(50,50,320,240, PCInterface.this));
+                            }
+                        });
+                        buttons.add(new MButton(10,getHeight()-getInsets().bottom-getInsets().top-100,32,32, this){
+                            {
+                                setImg(fileIcon);
+                                setBgC(new Color(0,0,0,0));
+                                setBordered(false);
+                            }
+
+                            @Override
+                            public void performAction() {
+                                showMenu = false;
+                                setDesktopState(DesktopState.DEFAULT);
+                                windows.add(new FileBrowser(50,50,320,240, PCInterface.this));
                             }
                         });
                         break;

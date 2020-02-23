@@ -26,5 +26,7 @@ public class CommandLine extends MetaWindow {
     @Override
     public void draw(Graphics2D g2) {
         super.draw(g2);
+        g2.setFont(segoe);
+        g2.drawString("THIS WILL WORK SOON",bounds.x+10,bounds.y+50);
     }
 }

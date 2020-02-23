@@ -140,35 +140,35 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                                     }
                                 }
                                 if (w != null && w.edgeHovers != null) {
-                                    if ((w.edgeHovers[0] && w.edgeHovers[2])) {
+                                    if ((w.edgeHovers[0] && w.edgeHovers[2])&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[0] = true;
                                         return;
-                                    } else if ((w.edgeHovers[0] && w.edgeHovers[3])) {
+                                    } else if ((w.edgeHovers[0] && w.edgeHovers[3])&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[1] = true;
                                         return;
-                                    } else if ((w.edgeHovers[1] && w.edgeHovers[2])) {
+                                    } else if ((w.edgeHovers[1] && w.edgeHovers[2])&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[2] = true;
                                         return;
-                                    } else if ((w.edgeHovers[1] && w.edgeHovers[3])) {
+                                    } else if ((w.edgeHovers[1] && w.edgeHovers[3])&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[3] = true;
                                         return;
-                                    } else if (w.edgeHovers[0]) {
+                                    } else if (w.edgeHovers[0]&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[4] = true;
                                         return;
-                                    } else if (w.edgeHovers[1]) {
+                                    } else if (w.edgeHovers[1]&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[5] = true;
                                         return;
-                                    } else if (w.edgeHovers[2]) {
+                                    } else if (w.edgeHovers[2]&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[6] = true;
                                         return;
-                                    } else if (w.edgeHovers[3]) {
+                                    } else if (w.edgeHovers[3]&&w.resizable) {
                                         resizableWindow = w.id;
                                         resizeMode[7] = true;
                                         return;
