@@ -2,6 +2,7 @@ package control;
 
 import bert.App;
 import world.interfaces.GameInterface;
+import world.interfaces.PCInterface;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -64,9 +65,9 @@ public class MButton extends Rectangle{
         }
 
         //Hover
-        if(containsMouse()&&owner.usable){
-            g2.setColor(new Color(0,0,0,100));
-            g2.fillRect(x,y,width,height);
+        if(containsMouse()&&owner.usable) {
+            g2.setColor(new Color(0, 0, 0, 100));
+            g2.fillRect(x, y, width, height);
         }
     }
 
