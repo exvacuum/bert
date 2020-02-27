@@ -27,7 +27,7 @@ public class MetaWindow{
     public boolean resizable = true;
 
     String title = "";
-    Font segoe = new Font("Segoe UI", Font.PLAIN, 12);
+    public Font segoe = new Font("Segoe UI", Font.PLAIN, 12);
     public PCInterface owner;
     public Rectangle titleBar;
     public Rectangle bounds = new Rectangle(0,0,0,0);

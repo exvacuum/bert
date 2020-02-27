@@ -138,7 +138,6 @@ public class PCInterface extends GameInterface implements Runnable{
                 ig.setPaint(desktop);
                 ig.fillRect(0,0,getWidth(),getHeight());
                 ig.setColor(new Color(0,0,0,200));
-                ig.fillRect(0,getHeight()-getInsets().bottom-getInsets().top-50,getWidth(),50);
                 if(showMenu){
                     ig.fillRect(0,getHeight()-getInsets().bottom-getInsets().top-200,100,150);
                     ig.fillRect(-100,getHeight()-getInsets().bottom-getInsets().top-50,200,100);
