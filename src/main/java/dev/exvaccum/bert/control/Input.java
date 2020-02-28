@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
+    //Default key binds
     public static int KEY_INTERACT = KeyEvent.getExtendedKeyCodeForChar('Z');
     public static int KEY_BACK = KeyEvent.getExtendedKeyCodeForChar('X');
     public static int KEY_UP = KeyEvent.VK_UP;
@@ -17,16 +18,21 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public static int KEY_LEFT = KeyEvent.VK_LEFT;
     public static int KEY_RIGHT = KeyEvent.VK_RIGHT;
 
+    //Track mouse movement
     public Point mouseLocation = new Point(0,0);
     public Point oldLocation = new Point(0,0);
     public Point locationDiff = new Point(0,0);
 
+    //MetaWindow resize stuff
     boolean[] resizeMode = new boolean[9];
     int resizableWindow = -1;
 
     public void update(){
     }
 
+    /**
+     * @return Location of mouse on screen
+     */
     Point getMouseLocation(){
         return new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }
@@ -63,6 +69,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         if(Bert.mBert.player!=null) {
+
+            //Interactions with room objects
             if (keyEvent.getKeyCode() == KEY_INTERACT) {
                 if (Bert.mBert.world.currentRoom.getInteractiveObjectClosestToPlayer() != null) {
                     Bert.mBert.world.currentRoom.getInteractiveObjectClosestToPlayer().interact();
@@ -100,8 +108,9 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
         resizableWindow = -1;
         switch (mouseEvent.getButton()) {
             case MouseEvent.BUTTON1:
-                //Check for button presses
                 for (int i = 0; i < Bert.mBert.interfaces.size(); i++) {
+
+                    //Check for button presses inside of interfaces
                     ArrayList<MButton> buttons = Bert.mBert.interfaces.get(i).buttons;
                     for (int j = 0; j < buttons.size(); j++) {
                         MButton b = buttons.get(j);
@@ -110,11 +119,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                         }
                     }
 
+                    //If there are windows inside of this interface
                     if (((PCInterface) Bert.mBert.interfaces.get(i)).windows != null) {
                         ArrayList<MetaWindow> windows = ((PCInterface) Bert.mBert.interfaces.get(i)).windows;
                         for (int j = 0; j < windows.size(); j++) {
                             MetaWindow w = windows.get(j);
 
+                            //Determine if this window should be interacted with
                             boolean doaction = true;
                             for (int k = windows.size() - 1; k >= 0; k--) {
                                 if (windows.get(k).contains(getMouseLocation()) && k > j) {
@@ -122,14 +133,19 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                                     break;
                                 }
                             }
+
+                            //If this window should be interacted with
                             if (doaction) {
 
+                                //Focus window
                                 if(windows.get(j).bounds.contains(getMouseLocation().x-windows.get(j).owner.getInsets().left-windows.get(j).owner.getX(),getMouseLocation().y-windows.get(j).owner.getInsets().top-windows.get(j).owner.getY())) {
                                     if (j != windows.size() - 1) {
                                         windows.remove(j);
                                         windows.add(w);
                                     }
                                 }
+
+                                //Interact with buttons within this window
                                 if (w.windowButtons != null) {
                                     for (int m = 0; m < w.windowButtons.size(); m++) {
                                         WButton b = w.windowButtons.get(m);
@@ -139,6 +155,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                                         }
                                     }
                                 }
+
+                                //Handle edge hovering
                                 if (w != null && w.edgeHovers != null) {
                                     if ((w.edgeHovers[0] && w.edgeHovers[2])&&w.resizable) {
                                         resizableWindow = w.id;
@@ -204,12 +222,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
 
+        //Track move distance
         oldLocation = mouseLocation;
         Point newLocation = getMouseLocation();
         locationDiff.setLocation(newLocation.x-oldLocation.x,newLocation.y-oldLocation.y);
         mouseLocation.setLocation(getMouseLocation());
 
         for (int i = 0; i < Bert.mBert.interfaces.size(); i++) {
+
+            //Handle the dragging and resizing of windows
             if (((PCInterface) Bert.mBert.interfaces.get(i)).windows != null) {
                 ArrayList<MetaWindow> windows = ((PCInterface) Bert.mBert.interfaces.get(i)).windows;
                 for (int j = 0; j < windows.size(); j++) {

@@ -136,7 +136,7 @@ public class Bert extends JFrame {
 
         //Initialize World
         world.add(new Bedroom());
-        player = new Player(this);
+        player = new Player();
         world.add(player);
     }
 

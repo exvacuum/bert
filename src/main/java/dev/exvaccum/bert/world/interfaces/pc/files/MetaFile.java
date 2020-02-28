@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class MetaFile extends WButton {
 
+    //File type
     FileType type = FileType.DOCUMENT;
     public enum FileType{
         DIRECTORY,
@@ -22,7 +23,7 @@ public class MetaFile extends WButton {
         AUDIO
     }
 
-    BufferedImage icon;
+    //Load available icons
     static BufferedImage image, audio, doc,folder;
     static {
         try {
@@ -35,13 +36,15 @@ public class MetaFile extends WButton {
         }
     }
 
+    //Filename and icon
     public String fname;
+    BufferedImage icon;
 
     /**
-     *
-     * Creates a button with specified dimensions
-     *
-     * @param owner
+     * Files to interact with in the FileBrowser
+     * @param owner Filebrowser window which owns this file
+     * @param fname File name
+     * @param fileType File type
      */
     public MetaFile(MetaWindow owner, String fname, FileType fileType) {
         super(0, 0, 0, 0, owner);
@@ -52,6 +55,10 @@ public class MetaFile extends WButton {
         setBordered(false);
     }
 
+    /**
+     * Sets file type and icon image
+     * @param type Desired type
+     */
     public void setFileType(FileType type){
         this.type = type;
         switch (type){
@@ -73,6 +80,8 @@ public class MetaFile extends WButton {
     @Override
     public void draw(Graphics2D g2){
         super.draw(g2);
+
+        //Draw filename if file is visible
         boolean shouldDrawText = false;
         for (int i = 0; i < ((FileBrowser)ownerWindow).target.contents.length; i++) {
             for (int j = 0; j < ((FileBrowser)ownerWindow).target.contents[0].length; j++) {
@@ -90,6 +99,8 @@ public class MetaFile extends WButton {
 
     @Override
     public void performAction(){
+
+        //Open appropriate program
         switch (type){
             case IMAGE:
                 try {
@@ -101,6 +112,9 @@ public class MetaFile extends WButton {
         }
     }
 
+    /**
+     * @return current directory being viewed
+     */
     public MetaDirectory getParent() {
         return ((FileBrowser)ownerWindow).upLevels.get(((FileBrowser)ownerWindow).upLevels.size()-1);
     }

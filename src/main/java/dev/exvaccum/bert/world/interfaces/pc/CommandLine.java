@@ -7,8 +7,17 @@ import java.util.ArrayList;
 
 public class CommandLine extends MetaWindow {
 
+    //Lines in console
     public ArrayList<String> lines = new ArrayList<>();
 
+    /**
+     * CLI
+     * @param x x-coordinate of window
+     * @param y y-coordinate of window
+     * @param width width of window
+     * @param height  height of window
+     * @param owner PC interface to which this window belongs
+     */
     public CommandLine(int x, int y, int width, int height, PCInterface owner) {
         super(x, y, width, height, owner);
         title = "Command Line Interface";

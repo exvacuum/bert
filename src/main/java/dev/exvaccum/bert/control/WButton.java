@@ -7,7 +7,7 @@ public class WButton extends MButton{
     public MetaWindow ownerWindow;
 
     /**
-     * Creates a button with specified dimensions
+     * Creates a button with specified dimensions, for use inside of a metawindow rather than an interface
      *
      * @param x      X coordinate
      * @param y      Y coordinate

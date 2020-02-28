@@ -48,7 +48,7 @@ public class World extends ArrayList<Room> {
         }
 
         //Update player
-        player.update(this);
+        player.update();
     }
 
     /**

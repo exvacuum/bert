@@ -7,12 +7,18 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class MetaDirectory extends MetaFile{
-    public MetaFile[][] contents = new MetaFile[6][4];
+
+    //Array for contents
+    public MetaFile[][] contents;
+
+    //One-time boolean for use during initialization
     public boolean initializing = true;
+
     /**
-     * Creates a button with specified dimensions
-     *
-     * @param owner
+     * A file which itself contains files, these are viewable using the file browser
+     * @param owner Owner window
+     * @param fname File name
+     * @param contents Array of contents, divided into rows and columns
      */
     public MetaDirectory(MetaWindow owner, String fname, MetaFile[][] contents) {
         super(owner, fname, FileType.DIRECTORY);
@@ -20,6 +26,10 @@ public class MetaDirectory extends MetaFile{
         refresh();
     }
 
+    /**
+     * Draws all files within the directory
+     * @param g2 Graphics2D object for drawing
+     */
     public void drawContents(Graphics2D g2){
         for (int i = 0; i < contents.length; i++) {
             for (int j = 0; j < contents[0].length; j++) {
@@ -31,6 +41,13 @@ public class MetaDirectory extends MetaFile{
 
     @Override
     public void performAction(){
+
+        /*
+            When the icon for a directory is clicked:
+                - remove old icons
+                - navigate into it
+                - refresh icons if necessary
+         */
         for (int i = 0; i < ((FileBrowser)ownerWindow).target.contents.length; i++) {
             ownerWindow.windowButtons.removeAll(Arrays.asList(((FileBrowser)ownerWindow).target.contents[i]));
         }
@@ -40,6 +57,9 @@ public class MetaDirectory extends MetaFile{
         initializing = false;
     }
 
+    /**
+     * Rebuilds currently-visible icons
+     */
     public void refresh(){
         for (int i = 0; i < contents.length; i++) {
             ownerWindow.windowButtons.addAll(Arrays.asList(contents[i]));

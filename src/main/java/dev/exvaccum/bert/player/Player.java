@@ -19,32 +19,54 @@ import java.io.IOException;
 
 public class Player extends JDialog implements FocusListener {
 
+    //Player will experience various control styles throughout game
+    public ControlState controlState = ControlState.PLATFORMER;
     enum ControlState{
         PLATFORMER,
         FLYING
     }
-    public ControlState controlState = ControlState.PLATFORMER;
 
     //Spritesheet
     SpriteSheet sheet;
-    public JPanel pane;
     SpriteEngine engine;
+
+    //Collision bounds
     Rectangle bounds = new Rectangle(getX()+16,getY()+32,64,128);
+
+    //Drawing panel
+    public JPanel pane;
+
+    //Position relative to
     public Point relPos;
+
+    //Input directions
     public int u,d,l,r;
+
+    //Horizontal mirroring control
     public int xScale = 1;
+
+    //Movement velocity
     public int vel = 1;
-    public Player(Frame owner){
-        super(owner);
+
+    /**
+     * Player object
+     */
+    public Player(){
+        super(Bert.mBert);
         init();
     }
 
+    /**
+     * Initialize the player
+     */
     void init() {
 
+        //Add input listeners
         addKeyListener(Bert.mBert.input);
         addMouseListener(Bert.mBert.input);
         addMouseMotionListener(Bert.mBert.input);
 
+        //Startup sprite engine
         try {
             BufferedImage img = ImageIO.read(Bert.getResourceAsFile("playerStrip.png"));
             sheet = new SpriteSheetBuilder().
@@ -71,6 +93,7 @@ public class Player extends JDialog implements FocusListener {
             e.printStackTrace();
         }
 
+        //Setup transparent window
         setUndecorated(true);
         setSize(96,192);
         setBackground(new Color(0,0,0,0));
@@ -80,11 +103,16 @@ public class Player extends JDialog implements FocusListener {
         addFocusListener(this);
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-getWidth()/2-60,Toolkit.getDefaultToolkit().getScreenSize().height/2-getHeight()/2+130);
         setVisible(true);
+
+        //Focus this
         requestFocus();
     }
 
     public void paint(Graphics2D g2, double progress) {
+
+        //Draw player sprite
         g2.drawImage(sheet.getSprite(progress), 0-(sheet.getSprite(progress).getWidth()*Math.min(0,xScale)), 0,sheet.getSprite(progress).getWidth()*xScale,sheet.getSprite(progress).getHeight(), null);
+
         if(Bert.debug) {
             g2.setColor(Color.BLUE);
             g2.setStroke(new BasicStroke(3));
@@ -98,7 +126,12 @@ public class Player extends JDialog implements FocusListener {
         return bounds;
     }
 
-    public void update(World world){
+    /**
+     * Handle game logic
+     */
+    public void update(){
+
+        //Movement
         if(r-l!=0||d-u!=0){
             if(r-l!=0)xScale = r-l;
             Room currentRoom = Bert.mBert.world.updateCurrentRoom();
@@ -113,7 +146,6 @@ public class Player extends JDialog implements FocusListener {
             }
         }
         bounds = new Rectangle(getX()+16,getY()+32,64,128);
-        relPos = new Point();
     }
 
     @Override
@@ -122,6 +154,8 @@ public class Player extends JDialog implements FocusListener {
 
     @Override
     public void focusLost(FocusEvent focusEvent) {
+
+        //When window focus lost, cease movement and re-request focus
         u=d=l=r=0;
         requestFocus();
     }

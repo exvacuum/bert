@@ -10,19 +10,32 @@ import java.io.IOException;
 
 public class ImageViewer extends MetaWindow {
 
+    //Image to view
     public BufferedImage image;
 
+    /**
+     * Image viewer, shows a desired image from file browser
+     * @param x x-coordinate of window
+     * @param y y-coordinate of window
+     * @param width width of window
+     * @param height  height of window
+     * @param owner PC interface to which this window belongs
+     * @param fname filename for image loading
+     */
     public ImageViewer(int x, int y, int width, int height, PCInterface owner, String fname) {
         super(x, y, width, height, owner);
-        title = "Image Viewer";
-        bgColor = new Color(0,0,0,0);
+        title = "Image Viewer - "+fname;
+        bgColor = new Color(0,0,0,50);
         type = WindowType.IMAGE_VIEWER;
         resizable = true;
+
+        //Load image
         try {
             this.image = ImageIO.read(Bert.getResourceAsFile(fname));
         }catch (IOException e){
             e.printStackTrace();
         }
+
         bounds.height += titleBar.height;
     }
 

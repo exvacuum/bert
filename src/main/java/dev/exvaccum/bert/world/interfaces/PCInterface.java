@@ -388,7 +388,11 @@ public class PCInterface extends GameInterface implements Runnable{
 
     @Override
     public void run() {
+
+        //Run Boot Screen
         boot();
+
+        //Main loop
         while (Bert.mBert.interfaces.contains(this)) {
             step();
             draw();
