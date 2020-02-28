@@ -32,7 +32,7 @@ dependencies {
 
 application {
     // Define the main class for the application
-    mainClassName = 'bert.App'
+    mainClassName = 'dev.exvaccum.bert.App'
 }
 
 configurations.all {
@@ -46,7 +46,7 @@ configurations.all {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'bert.App'
+                'Main-Class': 'dev.exvaccum.bert.App'
         )
     }
     from {
