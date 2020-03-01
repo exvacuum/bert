@@ -43,11 +43,11 @@ public class FileBrowser extends MetaWindow {
             {
                 new MetaDirectory(FileBrowser.this,"Images", new MetaFile[][]{{
                     new NavUp(FileBrowser.this),
-                    new MetaFile(FileBrowser.this,"playerStrip.png", MetaFile.FileType.IMAGE)}
+                    new MetaFile(FileBrowser.this,"me.png", MetaFile.FileType.IMAGE)}
                 }),
                 new MetaDirectory(FileBrowser.this,"Audio", new MetaFile[][]{{
                     new NavUp(FileBrowser.this),
-                    new MetaFile(FileBrowser.this,"snd.wav", MetaFile.FileType.AUDIO)}
+                    new MetaFile(FileBrowser.this,"church.wav", MetaFile.FileType.AUDIO)}
                 }),
                 new MetaDirectory(FileBrowser.this,"Documents", new MetaFile[][]{{
                     new NavUp(FileBrowser.this),

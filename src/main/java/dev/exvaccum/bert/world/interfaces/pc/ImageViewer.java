@@ -2,6 +2,7 @@ package dev.exvaccum.bert.world.interfaces.pc;
 
 import dev.exvaccum.bert.Bert;
 import dev.exvaccum.bert.world.interfaces.PCInterface;
+import dev.exvaccum.bert.world.interfaces.pc.files.MetaFile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -31,7 +32,7 @@ public class ImageViewer extends MetaWindow {
 
         //Load image
         try {
-            this.image = ImageIO.read(Bert.getResourceAsFile(fname));
+            this.image = ImageIO.read(Bert.getResourceAsFile(MetaFile.pathMap.get(fname)));
         }catch (IOException e){
             e.printStackTrace();
         }

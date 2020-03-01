@@ -6,11 +6,13 @@ import dev.exvaccum.bert.world.interfaces.PCInterface;
 import dev.exvaccum.bert.world.interfaces.pc.FileBrowser;
 import dev.exvaccum.bert.world.interfaces.pc.ImageViewer;
 import dev.exvaccum.bert.world.interfaces.pc.MetaWindow;
+import dev.exvaccum.bert.world.interfaces.pc.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class MetaFile extends WButton {
 
@@ -39,6 +41,13 @@ public class MetaFile extends WButton {
     //Filename and icon
     public String fname;
     BufferedImage icon;
+
+    //Filename to actual path map
+    public static HashMap<String, String> pathMap = new HashMap<>();
+    static {
+        pathMap.put("me.png","pc/playerStrip.png");
+        pathMap.put("church.wav","pc/wonderwall.wav");
+    }
 
     /**
      * Files to interact with in the FileBrowser
@@ -104,11 +113,15 @@ public class MetaFile extends WButton {
         switch (type){
             case IMAGE:
                 try {
-                    BufferedImage image = ImageIO.read(Bert.getResourceAsFile(fname));
+                    BufferedImage image = ImageIO.read(Bert.getResourceAsFile(pathMap.get(fname)));
                     ownerWindow.owner.windows.add(new ImageViewer(64,64,image.getWidth(),image.getHeight(),(PCInterface)owner,fname));
                 }catch (IOException e){
                     e.printStackTrace();
                 }
+                break;
+            case AUDIO:
+                ownerWindow.owner.windows.add(new SoundPlayer(64,64,180,100,(PCInterface)owner,fname));
+                break;
         }
     }
 

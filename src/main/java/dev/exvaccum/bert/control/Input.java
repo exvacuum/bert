@@ -236,33 +236,36 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                 for (int j = 0; j < windows.size(); j++) {
                     MetaWindow w = windows.get(j);
                     if(w!=null&&w.edgeHovers!=null) {
-                        if (resizeMode[0]&&resizableWindow==w.id) {
-                            //Top-Left
-                            w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y, w.bounds.width - locationDiff.x, w.bounds.height - locationDiff.y);
-                        } else if (resizeMode[1]&&resizableWindow==w.id) {
-                            //Bottom-Left
-                            w.bounds.setBounds(w.bounds.x+ locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height + locationDiff.y);
-                        } else if (resizeMode[2]&&resizableWindow==w.id) {
-                            //Top-Right
-                            w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width + locationDiff.x, w.bounds.height - locationDiff.y);
-                        } else if (resizeMode[3]&&resizableWindow==w.id) {
-                            //Bottom-Right
-                            w.bounds.setBounds(w.bounds.x , w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height + locationDiff.y);
-                        } else if (resizeMode[4]&&resizableWindow==w.id) {
-                            //Left
-                            w.bounds.setBounds(w.bounds.x+locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height);
-                        } else if (resizeMode[5]&&resizableWindow==w.id) {
-                            //Right
-                            w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height);
-                        } else if (resizeMode[6]&&resizableWindow==w.id) {
-                            //Top
-                            w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width, w.bounds.height - locationDiff.y);
-                        } else if (resizeMode[7]&&resizableWindow==w.id) {
-                            //Bottom
-                            w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width, w.bounds.height + locationDiff.y);
-                        } else if (resizeMode[8]&&resizableWindow==w.id) {
+                        if(w.bounds.width+locationDiff.x>180&&w.bounds.height+locationDiff.y>100) {
+                            if (resizeMode[0] && resizableWindow == w.id) {
+                                //Top-Left
+                                w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y, w.bounds.width - locationDiff.x, w.bounds.height - locationDiff.y);
+                            } else if (resizeMode[1] && resizableWindow == w.id) {
+                                //Bottom-Left
+                                w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height + locationDiff.y);
+                            } else if (resizeMode[2] && resizableWindow == w.id) {
+                                //Top-Right
+                                w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width + locationDiff.x, w.bounds.height - locationDiff.y);
+                            } else if (resizeMode[3] && resizableWindow == w.id) {
+                                //Bottom-Right
+                                w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height + locationDiff.y);
+                            } else if (resizeMode[4] && resizableWindow == w.id) {
+                                //Left
+                                w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height);
+                            } else if (resizeMode[5] && resizableWindow == w.id) {
+                                //Right
+                                w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height);
+                            } else if (resizeMode[6] && resizableWindow == w.id) {
+                                //Top
+                                w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width, w.bounds.height - locationDiff.y);
+                            } else if (resizeMode[7] && resizableWindow == w.id) {
+                                //Bottom
+                                w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width, w.bounds.height + locationDiff.y);
+                            }
+                        } if (resizeMode[8] && !resizeMode[6] && resizableWindow == w.id) {
                             //Moving
-                            if(w.owner.getBounds().contains(getMouseLocation().x,getMouseLocation().y))w.bounds.setLocation(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y);
+                            if (w.owner.getBounds().contains(getMouseLocation().x, getMouseLocation().y))
+                                w.bounds.setLocation(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y);
                             else resizableWindow = -1;
                         }
                     }
