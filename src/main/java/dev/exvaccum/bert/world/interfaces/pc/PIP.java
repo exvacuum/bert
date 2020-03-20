@@ -17,7 +17,7 @@ public class PIP extends MetaWindow {
      */
     public PIP(int x, int y, int width, int height, PCInterface owner) {
         super(x, y, width, height, owner);
-        title = "Picture-In-Picture";
+        title = "This";
         type = WindowType.PIP;
     }
 

@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<YWRITER7>
+	<PROJECT>
+		<Ver>7</Ver>
+		<Title><![CDATA[0623]]></Title>
+		<AuthorName><![CDATA[Silas Bartha]]></AuthorName>
+		<Bio><![CDATA[]]></Bio>
+		<Desc><![CDATA[A sample project you can modify. Or you can delete all the chapters, characters, etc, and start fresh.]]></Desc>
+		<FieldTitle1><![CDATA[]]></FieldTitle1>
+		<FieldTitle2><![CDATA[]]></FieldTitle2>
+		<FieldTitle3><![CDATA[]]></FieldTitle3>
+		<FieldTitle4><![CDATA[]]></FieldTitle4>
+		<LastFullBackup>2020-03-20</LastFullBackup>
+		<WordTarget>0</WordTarget>
+		<WordTargetStartDate>0001-01-01</WordTargetStartDate>
+		<WordTargetEndDate>0001-01-01</WordTargetEndDate>
+		<WordCountStart>0</WordCountStart>
+		<EndFrontMatterChID>0</EndFrontMatterChID>
+		<EndMiddleChID>0</EndMiddleChID>
+		<EndBeginningChID>0</EndBeginningChID>
+		<LatexSingleQuotes>0</LatexSingleQuotes>
+		<LatexSuppressChapterTitles>0</LatexSuppressChapterTitles>
+		<LatexSceneDivider></LatexSceneDivider>
+		<HtmlSceneDivider></HtmlSceneDivider>
+		<HtmlEncoding></HtmlEncoding>
+		<HtmlUnicode>0</HtmlUnicode>
+		<LaTeXHeaderFile><![CDATA[]]></LaTeXHeaderFile>
+		<MRUSpecificDate>0001-01-01</MRUSpecificDate>
+		<MRUSpecificTime>00:00:00</MRUSpecificTime>
+		<LastViewedScID>1</LastViewedScID>
+		<DeadlineDate1>0001-01-01</DeadlineDate1>
+		<DeadlineDate2>0001-01-01</DeadlineDate2>
+		<DeadlineDate3>0001-01-01</DeadlineDate3>
+		<DeadlineDate4>0001-01-01</DeadlineDate4>
+		<DeadlineDate5>0001-01-01</DeadlineDate5>
+		<DeadlineStartDate1>0001-01-01</DeadlineStartDate1>
+		<DeadlineStartDate2>0001-01-01</DeadlineStartDate2>
+		<DeadlineStartDate3>0001-01-01</DeadlineStartDate3>
+		<DeadlineStartDate4>0001-01-01</DeadlineStartDate4>
+		<DeadlineStartDate5>0001-01-01</DeadlineStartDate5>
+		<Fields>
+			<Field_MobiEpubEnabled>0</Field_MobiEpubEnabled>
+			<Field_MobiExport>1</Field_MobiExport>
+			<Field_EpubExport>1</Field_EpubExport>
+		</Fields>
+
+	</PROJECT>
+
+	<LOCATIONS>
+	<LOCATION>
+		<ID>1</ID>
+		<Title><![CDATA[Bert's Room]]></Title>
+		<Desc><![CDATA[Standard bedroom]]></Desc>
+	</LOCATION>
+
+	<LOCATION>
+		<ID>2</ID>
+		<Title><![CDATA[Null space]]></Title>
+		<Desc><![CDATA[Absolute darkness as far as the eye can't see]]></Desc>
+		<AKA><![CDATA[void]]></AKA>
+	</LOCATION>
+
+	</LOCATIONS>
+	<ITEMS>
+	<ITEM>
+		<ID>1</ID>
+		<Title><![CDATA[The Computer]]></Title>
+		<Desc><![CDATA[Bert's computer]]></Desc>
+		<Tags><![CDATA[Interactable]]></Tags>
+		<ImageFile><![CDATA[computer.png]]></ImageFile>
+	</ITEM>
+	<ITEM>
+		<ID>2</ID>
+		<Title><![CDATA[Bert's Bed]]></Title>
+		<ImageFile><![CDATA[bed.png]]></ImageFile>
+	</ITEM>
+	</ITEMS>
+	<CHARACTERS>
+	<CHARACTER>
+		<ID>1</ID>
+		<Title><![CDATA[Bert]]></Title>
+		<Tags><![CDATA[Class-A, AE]]></Tags>
+		<ImageFile><![CDATA[playerStrip.png]]></ImageFile>
+		<Notes><![CDATA[- Attending the Eckstein Institute in Azimuth, Ontario
+- Studying philosophy
+- Hopelessly neurotic]]></Notes>
+		<SortOrder>1</SortOrder>
+		<AKA><![CDATA[Bertrand NaN]]></AKA>
+		<Bio><![CDATA[Age: 21
+Gender:  M (AE)
+
+Subject is a class-A anomalous entity with a keyhole visage. Subject was aged 11 at the time of the spatial disturbance, and was presumably affected by a category 3 resonace discharge that swept over his area of residence. Despite this, the entity shows no signs of possessing any anomalous abilities.]]></Bio>
+		<Goals><![CDATA[- Graduate
+- Reconcile metaphysical distress]]></Goals>
+		<FullName><![CDATA[Bertrand]]></FullName>
+		<Major>-1</Major>
+	</CHARACTER>
+
+	<CHARACTER>
+		<ID>2</ID>
+		<Title><![CDATA[Silas]]></Title>
+		<Tags><![CDATA[Developer, Human]]></Tags>
+		<ImageFile><![CDATA[17646388.png]]></ImageFile>
+		<Notes><![CDATA[- Mostly hangs out in the coffee shop during the day.
+- Server of a Secondary Plot]]></Notes>
+		<Bio><![CDATA[Age: 17
+Gender:  M
+
+How did I get here?
+
+Yep, it's one of these games. My name is Silas Bartha, and I created this world. I don't really want to ruin it for all of the inhabitants though.]]></Bio>
+		<FullName><![CDATA[Silas Bartha]]></FullName>
+		<Major>-1</Major>
+	</CHARACTER>
+
+	<CHARACTER>
+		<ID>3</ID>
+		<Title><![CDATA[Eckstein]]></Title>
+		<Tags><![CDATA[Human]]></Tags>
+		<Notes><![CDATA[- Offers secondary plot
+- Converses with Bert in his office.
+- Virtue: Compassion
+- Vice: Pride]]></Notes>
+		<Bio><![CDATA[Age: 68
+Gender:  M
+
+August Eckstein is a Canadian eccentric, progenitor of NOAM, and founder of the Eckstein Institute of the Mind in Azimuth. His fascination with and respect for AEs was truly unprecedented in the time following the spatial disruption, and his school was among the first to grant admissions to AEs.]]></Bio>
+		<Goals><![CDATA[- Provide education]]></Goals>
+		<FullName><![CDATA[August Eckstein]]></FullName>
+		<Major>-1</Major>
+	</CHARACTER>
+
+	<CHARACTER>
+		<ID>4</ID>
+		<Title><![CDATA[Nathan]]></Title>
+		<Tags><![CDATA[Human]]></Tags>
+		<Notes><![CDATA[- Bert's roommate
+-Offers Secondary plot
+- Instrumental in inciting the Main plot]]></Notes>
+		<AKA><![CDATA[Nate]]></AKA>
+		<Bio><![CDATA[Age: 19
+Gender:  M
+
+Nathan Boyle is a first-year student of psychology at the Eckstein Institute. While he is Bert's roommate, the two are not particularily close.]]></Bio>
+		<Goals><![CDATA[- Concerned for Bert]]></Goals>
+		<FullName><![CDATA[Nathan Boyle]]></FullName>
+	</CHARACTER>
+
+	</CHARACTERS>
+	<PROJECTNOTES>
+	<PROJECTNOTE>
+		<ID>1</ID>
+		<Title><![CDATA[Anomalous Entity Classification]]></Title>
+		<Desc><![CDATA[The National Organization for Anomaly Management (NOAM) defines an anomalous entity (AE) as any entity birthed from the spatial disturbance, either in whole or as a modification to an originally human body. Such AEs can be further divided into one of seven subcategories:
+
+1. Alpha Class (class-A):
+AEs which exhibit the following characteristics:
+- General Intelligence
+- Lack of anomalous abilities
+
+The most common class-A anomalous entities are humans exposed to byproducts of the spatial disturbance. Such enitities are not considered to be high-risk. Ensuring peaceful relations between mankind and class-A anomalous entities is left to local law enforcement, and class-A entities are afforded the same rights and responsibilities as humans. Non-humanoid entities spawned directly from the spatial disturbance with no discernable abilities are also afforded this classification.
+
+2. Beta Class (class-B):
+AEs which exhibit the following characteristics:
+- Humanoid appearance
+- General intelligence
+- Anomalous abilities, voluntary or otherwise, evaluated by NOAM CEAs to be low-risk
+
+B-AEs have been observed to form in ways similar to class-A AEs, however it is much more common that the natural birthing of an AE from two parent A-AEs will result in an AE with compounded anomalous properties. Class-B AEs are not considered to be high-risk, and are allowed to coexist with humans. Due to the potential dangers that come with any form of anomalous abilities, routine check-ins with CEAs are required for maintaining the safety of all. Criminal activity by class-B AEs is handled by local law enforcement, aided by NOAM special forces if anomalous activity is detected. Class-B AEs are afforded the same rights and responsibilities as class-A AEs and humans.
+
+3. Gamma Class (class-Γ):
+AEs which exhibit the following characteristics:
+- General intelligence
+- Voluntary anomalous abilities, evaluated by NOAM CEAs to be moderate-to-high-risk
+- Lack of history of negligent or intentional catastrophic anomalous activity
+
+Γ-AEs are much less common than B-AEs and A-AEs, but are far more regulated. Γ-AEs have been known to have been formed directly from the spatial disturbance, and these AEs do not typically possess humanoid forms. However, it is not unprecedented for the abilities of B-AEs to develop into more dangerous ones, elevating their classification. Routine check-ins with CEAs are required on a frequent basis, and Γ-AE criminal activity is handled almost exclusively by NOAM forces. Γ-AEs are allowed to coexist with humans as a general rule, but certain places where anomalous disturbance is especially dangerous are off-limits for Γ-AEs.
+
+4. Delta Class (class-Δ):
+AEs which exhibit the following characteristics:
+- General Intelligence
+- Voluntary anomalous abilities, evaluated by NOAM CEAs to be moderate-to-high-risk
+- History of intentional catastrophic anomalous activity or repeated negligence (2 or more incidents)
+
+Δ-AEs are dangerous Γ-AEs considered by NOAM to be fit for incarceration. NOAM special forces are dispatched to capture these entities, by any means necessary.
+
+5. Epsilon Class (class-E):
+AEs which exhibit the following characteristics:
+- Extreme-risk anomalous abilities
+
+E-AEs are considered to be high-level threats, and NOAM special forces are dispatched for their immediate termination. Often these AEs are very large and unable to be communicated with. The intelligence  level of these entities is presumed to be akin to that of common reptiles.
+
+6. Zeta Class (class-Z):
+AEs which exhibit the following characteristics:
+- Basic intelligence
+- no to moderate-risk anomalous abilties
+
+Z-AEs are treated similarly to nonhuman animals. 
+
+7. Eta Class (Class-H):
+AEs which exhibit the following characteristics:
+- No discernable intelligence
+
+H-AEs are fairly common, and are supposed artifacts of the spatial disturbance which exist as a clump of anomalous matter. NOAM agents serve to clean up H-AEs from an area should too many arise.]]></Desc>
+		<SortOrder>1</SortOrder>
+	</PROJECTNOTE>
+
+	<PROJECTNOTE>
+		<ID>2</ID>
+		<Title><![CDATA[National Organization for Anomaly Management (NOAM)]]></Title>
+		<Desc><![CDATA[The National Organization for Anomaly Management (NOAM) is an organization dedicated to the peaceful coexistence of anomalous entities and the native inhabitants of Earth. NOAM's jurisdiction extends across Canada, and it operates on a federal, provincial, and municipal levels. 
+
+NOAM's core values were concieved by Canadian philosopher and eccentric August Eckstein shortly following the spatial disruption. Eckstein created a list of principles, which were intended as guidelines for any nation for ethical interaction with anomalous entities. Many governments rejected these guidelines, but the Canadian federal government created NOAM as a method of co-opting Eckstien's guidelines. NOAM has been responsible for great fluorishing between
+
+NOAM coexistance ensurance agents (CEAs) are responsible for overseeing class-B and Γ AEs and keeping the peace. NOAM also possesses a small specialist military force intended for the capture and/or destruction of dangerous class-Δ and E Anomalous Entities (AEs).]]></Desc>
+		<SortOrder>2</SortOrder>
+	</PROJECTNOTE>
+
+	</PROJECTNOTES>
+	<PROJECTVARS>
+	</PROJECTVARS>
+	<PROJECTEXPS>
+	</PROJECTEXPS>
+	<SCENES>
+	<SCENE>
+		<ID>1</ID>
+		<Title><![CDATA[Prologue]]></Title>
+		<Desc><![CDATA[This scene is the first thing the player encounters before entering the game. It exposes the fact that Bert was once an ordinary human.]]></Desc>
+		<BelongsToChID>1</BelongsToChID>
+		<Field1>1</Field1>
+		<Field2>1</Field2>
+		<Field3>1</Field3>
+		<Field4>1</Field4>
+		<Status>1</Status>
+		<WordCount>88</WordCount>
+		<LetterCount>541</LetterCount>
+		<Characters>
+			<CharID>1</CharID>
+		</Characters>
+		<Locations>
+			<LocID>2</LocID>
+		</Locations>
+		<Items>
+		</Items>
+		<SceneContent><![CDATA[*Menu fades into complete darkness*
+*Fetus appears*
+Bert: "You have already grasped that Sisyphus is the absurd hero. He is, as much through his passions as
+through his torture."
+*Baby*
+Bert: "His scorn of the gods, his hatred of death, and his passion for life won him that unspeakable penalty in which the whole being is exerted toward accomplishing nothing."
+*Child*
+Bert: "This is the price that must be paid for the passions of this earth."
+*Shockwave, horizontal dissolve sweep to white, transform Bert*
+*--Albert Camus, 1942*]]></SceneContent>
+	</SCENE>
+
+	</SCENES>
+	<CHAPTERS>
+	<CHAPTER>
+		<ID>1</ID>
+		<Title><![CDATA[Chapter 1 - Ouroboros]]></Title>
+		<Desc><![CDATA[The ouroboros or uroborus (/ˌ(j)ʊərəˈbɒrəs/, also UK: /uːˈrɒbərɒs/,[2][3] US: /-oʊs/) is an ancient symbol depicting a serpent or dragon[4] eating its own tail.]]></Desc>
+		<SortOrder>1</SortOrder>
+		<Fields>
+			<Field_SuppressChapterTitle>0</Field_SuppressChapterTitle>
+			<Field_SuppressChapterBreak>0</Field_SuppressChapterBreak>
+		</Fields>
+
+		<SectionStart>-1</SectionStart>
+		<Type>0</Type>
+		<Scenes>
+			<ScID>1</ScID>
+		</Scenes>
+	</CHAPTER>
+
+	</CHAPTERS>
+	<WCLog>
+	<WC>
+		<Date>2020-03-19</Date>
+		<Count>0</Count>
+		<TotalCount>0</TotalCount>
+	</WC>
+
+	<WC>
+		<Date>2020-03-20</Date>
+		<Count>88</Count>
+		<TotalCount>88</TotalCount>
+	</WC>
+
+	</WCLog>
+</YWRITER7>

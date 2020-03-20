@@ -3,6 +3,7 @@ package dev.exvaccum.bert;
 import dev.exvaccum.bert.control.Input;
 import dev.exvaccum.bert.control.MinimHelper;
 import ddf.minim.Minim;
+import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.player.Player;
 import dev.exvaccum.bert.world.interfaces.GameInterface;
 import dev.exvaccum.bert.world.rooms.Bedroom;
@@ -28,10 +29,6 @@ public class Bert extends JFrame {
     //Player
     public Player player;
 
-    //Logical steps per second is limited to 60
-    public static final int TPS = 60;
-    public static final int TICK_DELAY = 1000/TPS;
-
     //Windows
     public World world = new World();
 
@@ -46,6 +43,10 @@ public class Bert extends JFrame {
 
     //Input handler
     public Input input = new Input();
+    public ControllerObj controller = ControllerObj.PLAYER;
+    public enum ControllerObj{
+        PLAYER, COMPUTER
+    }
 
     //Audio handling is done using the wonderful Minim library
     public Minim minim;
@@ -53,6 +54,11 @@ public class Bert extends JFrame {
 
     //Fonts
     public Font h1Font, h2Font, pFont, biosFont;
+
+    //Frame Limiter
+    public static final int TPS = 120;
+    long next;
+
 
     /**
      *
@@ -73,8 +79,10 @@ public class Bert extends JFrame {
         while (true){
 
             //Step 60 TPS
-            if(System.currentTimeMillis()%TICK_DELAY==0) {
+            long time = System.currentTimeMillis();
+            if(time>=next) {
                 step();
+                next = time + 1000 / TPS;
             }
 
             //Draw as often as possible
@@ -104,12 +112,12 @@ public class Bert extends JFrame {
         try {
 
             //Custom Handwriting fonts
-            h1Font = Font.createFont(Font.TRUETYPE_FONT, getResourceAsFile("hwfont.ttf")).deriveFont(76f);
-            h2Font = Font.createFont(Font.TRUETYPE_FONT, getResourceAsFile("hwfont.ttf")).deriveFont(48f);
-            pFont = Font.createFont(Font.TRUETYPE_FONT, getResourceAsFile("hwfont.ttf")).deriveFont(24f);
+            h1Font = Font.createFont(Font.TRUETYPE_FONT, Utilities.getResourceAsFile("hwfont.ttf")).deriveFont(76f);
+            h2Font = Font.createFont(Font.TRUETYPE_FONT, Utilities.getResourceAsFile("hwfont.ttf")).deriveFont(48f);
+            pFont = Font.createFont(Font.TRUETYPE_FONT, Utilities.getResourceAsFile("hwfont.ttf")).deriveFont(24f);
 
             //BIOS Font
-            biosFont = Font.createFont(Font.TRUETYPE_FONT, getResourceAsFile("amibios.ttf")).deriveFont(8f);
+            biosFont = Font.createFont(Font.TRUETYPE_FONT, Utilities.getResourceAsFile("amibios.ttf")).deriveFont(8f);
 
             //Register the custom fonts
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -126,7 +134,7 @@ public class Bert extends JFrame {
         setBackground(new Color(0,0,0,0));
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         try {
-            setIconImage(ImageIO.read(getResourceAsFile("icon0.png")));
+            setIconImage(ImageIO.read(Utilities.getResourceAsFile("icon0.png")));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -165,36 +173,6 @@ public class Bert extends JFrame {
         pane.repaint();
         player.pane.repaint();
         world.repaint();
-    }
-
-    /**
-     * Utility function for getting a file from the resource folder, necessary to make a functional JAR
-     * @param resourcePath path to resource
-     * @return File from resources folder
-     */
-    public static File getResourceAsFile(String resourcePath) {
-        try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourcePath);
-            if (in == null) {
-                return null;
-            }
-
-            File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".tmp");
-            tempFile.deleteOnExit();
-
-            try (FileOutputStream out = new FileOutputStream(tempFile)) {
-                //copy stream
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, bytesRead);
-                }
-            }
-            return tempFile;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     class MPanel extends JPanel{

@@ -3,6 +3,7 @@ package dev.exvaccum.bert.world.interfaces;
 import dev.exvaccum.bert.Bert;
 import dev.exvaccum.bert.control.MButton;
 import ddf.minim.AudioPlayer;
+import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.world.interfaces.pc.CommandLine;
 import dev.exvaccum.bert.world.interfaces.pc.FileBrowser;
 import dev.exvaccum.bert.world.interfaces.pc.MetaWindow;
@@ -11,14 +12,21 @@ import dev.exvaccum.bert.world.objects.GameObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PCInterface extends GameInterface implements Runnable{
+public class PCInterface extends GameInterface implements Runnable, MouseListener {
 
     //Images
     public BufferedImage biosLogo, intertiaStarLogo, taskbarlogo, cmdIcon, pipIcon, fileIcon, screenImg;
+
+    //Screenshot Robot
+    Robot screenGrabber;
 
     //BIOS system information
     String[] sysinfo;
@@ -49,6 +57,36 @@ public class PCInterface extends GameInterface implements Runnable{
 
     //State of computer
     Screen screen = Screen.BOOT;
+
+    //Frame Limiter
+    public static final int TPS = 120;
+    long next;
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+        Bert.mBert.controller= Bert.ControllerObj.COMPUTER;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
     enum Screen{
         BOOT,
         LOGIN,
@@ -79,7 +117,7 @@ public class PCInterface extends GameInterface implements Runnable{
         super.init();
 
         //Play startup sound
-        bootSoundPlayer = Bert.mBert.minim.loadFile(Bert.getResourceAsFile("startup.wav").getPath());
+        bootSoundPlayer = Bert.mBert.minim.loadFile(Utilities.getResourceAsFile("startup.wav").getPath());
         bootSoundPlayer.play();
 
         setVisible(false);
@@ -89,17 +127,25 @@ public class PCInterface extends GameInterface implements Runnable{
         setSize(640+insets.left+insets.right,360+insets.top+insets.bottom);
         setResizable(false);
 
+        addMouseListener(this);
+
         //Prepare graphics buffer image
         screenImg = new BufferedImage(getWidth()-insets.left-insets.right,getHeight()-insets.top-insets.bottom, BufferedImage.TYPE_INT_RGB);
 
+        try {
+            screenGrabber = new Robot();
+        }catch (AWTException e){
+            e.printStackTrace();
+        }
+
         //Load Images
         try{
-            biosLogo = ImageIO.read(Bert.getResourceAsFile("bioslogo.png"));
-            intertiaStarLogo = ImageIO.read(Bert.getResourceAsFile("instar.png"));
-            taskbarlogo = ImageIO.read(Bert.getResourceAsFile("taskbarlogo.png"));
-            cmdIcon = ImageIO.read(Bert.getResourceAsFile("cmdicon.png"));
-            pipIcon = ImageIO.read(Bert.getResourceAsFile("pipicon.png"));
-            fileIcon = ImageIO.read(Bert.getResourceAsFile("fileicon.png"));
+            biosLogo = ImageIO.read(Utilities.getResourceAsFile("bioslogo.png"));
+            intertiaStarLogo = ImageIO.read(Utilities.getResourceAsFile("instar.png"));
+            taskbarlogo = ImageIO.read(Utilities.getResourceAsFile("taskbarlogo.png"));
+            cmdIcon = ImageIO.read(Utilities.getResourceAsFile("cmdicon.png"));
+            pipIcon = ImageIO.read(Utilities.getResourceAsFile("pipicon.png"));
+            fileIcon = ImageIO.read(Utilities.getResourceAsFile("fileicon.png"));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -117,9 +163,6 @@ public class PCInterface extends GameInterface implements Runnable{
     }
 
     public void paintGraphics(Graphics2D g2){
-
-        //Second Graphics2D object for image
-        Graphics2D ig = (Graphics2D)screenImg.getGraphics();
         switch (screen) {
             case BOOT:
                 g2.setColor(Color.WHITE);
@@ -133,17 +176,6 @@ public class PCInterface extends GameInterface implements Runnable{
                 }
                 g2.drawString("(C) Avuvyvfgvp Nofheqvgl Vap.,", 20, getHeight() - 70);
                 g2.drawString("01010100-01101001-01101110-01111001-01010101-01010010-01001100-u628pw7", 20, getHeight() - 50);
-                ig.setColor(Color.WHITE);
-                ig.setFont(Bert.mBert.biosFont);
-                ig.drawImage(biosLogo, 10, 10, null);
-                ig.drawImage(intertiaStarLogo, getWidth() - intertiaStarLogo.getWidth() - 20, 10, null);
-                ig.drawString("NAIBIOS (C)2002 Avuvyvfgvp Nofheqvgl Vap.,", 20, biosLogo.getHeight() + 30);
-                ig.drawString("PLACEHOLDER Release 10/21/2002 S", 20, biosLogo.getHeight() + 60);
-                for (int i = 0; i < lines; i++) {
-                    ig.drawString(sysinfo[i], 20, biosLogo.getHeight() + 90 + (30 * i));
-                }
-                ig.drawString("(C) Avuvyvfgvp Nofheqvgl Vap.,", 20, getHeight() - 70);
-                ig.drawString("01010100-01101001-01101110-01111001-01010101-01010010-01001100-PLACEHOLDER", 20, getHeight() - 50);
                 break;
             case DESKTOP:
                 g2.setPaint(desktop);
@@ -167,105 +199,91 @@ public class PCInterface extends GameInterface implements Runnable{
                     g2.setColor(new Color(0,0,0,200));
                     g2.fillRect(0,0,getWidth(),getHeight());
                 }
-                ig.setPaint(desktop);
-                ig.fillRect(0,0,getWidth(),getHeight());
-                ig.setColor(new Color(0,0,0,200));
-                if(showMenu){
-                    ig.fillRect(0,getHeight()-getInsets().bottom-getInsets().top-200,100,150);
-                    ig.fillRect(-100,getHeight()-getInsets().bottom-getInsets().top-50,200,100);
-                }else{
-                    ig.fillRoundRect(-100,getHeight()-getInsets().bottom-getInsets().top-50,200,100,100,100);
-                }
-                for (int i = 0; i < buttons.size(); i++) {
-                    MButton button = buttons.get(i);
-                    button.draw(ig);
-                }
-                for (int i = 0; i < windows.size(); i++){
-                    MetaWindow window = windows.get(i);
-                    window.draw(ig);
-                }
                 break;
         }
-    }
 
-    /**
-     * Boot PC
-     */
-    void boot(){
-        try{
-            for (int i = 0; i < sysinfo.length; i++) {
-                    Thread.sleep(2000);
-                    lines++;
-                    pane.repaint();
-            }
-
-            //Validate memory
-            while (currMem<memory){
-                    currMem += 10;
-                    sysinfo[2] = Math.min(currMem, memory) + "KB";
-                    pane.repaint();
-            }
-            sysinfo[2] = memory + "KB OK";
-            pane.repaint();
-
-            //Wait for sound to stop
-            while(true){
-                Thread.sleep(1);
-                if(bootSoundPlayer.length()-bootSoundPlayer.position()<=0){
-                    break;
-                }
-            }
-            bootSoundPlayer.close();
-
-            //Go to desktop
-            setScreen(Screen.DESKTOP);
-            OSSoundPlayer = Bert.mBert.minim.loadFile(Bert.getResourceAsFile("osstart.wav").getPath());
-            OSSoundPlayer.play();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        screenImg = screenGrabber.createScreenCapture(new Rectangle(getX()+getInsets().left, getY()+getInsets().top,getWidth()-getInsets().left-getInsets().right,getHeight()-getInsets().top-getInsets().bottom));
     }
 
     /**
      * Handle game logic
      */
     void step(){
+        switch (screen) {
+            case BOOT:
+                try {
+                    for (int i = 0; i < sysinfo.length; i++) {
+                        Thread.sleep(2000);
+                        lines++;
+                        pane.repaint();
+                    }
 
-        //Determine if resize cursor is appropriate
-        edgeHover = new boolean[4];
-        for (int i = 0; i < windows.size(); i++) {
-            windows.get(i).update();
-        }
-        if(windows.size()>0) {
-            for (int j = 0; j < 4; j++) {
-                if (windows.get(windows.size() - 1).edgeHovers[j]&&windows.get(windows.size() - 1).resizable) edgeHover[j] = true;
-            }
-        }
-        if((edgeHover[0]&&edgeHover[2])||(edgeHover[1]&&edgeHover[3])){
-            setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
-        }else if((edgeHover[0]&&edgeHover[3])||(edgeHover[1]&&edgeHover[2])){
-            setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
-        }else if(edgeHover[0]||edgeHover[1]){
-            setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
-        }else if(edgeHover[2]||edgeHover[3]){
-            setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
-        }else {
+                    //Validate memory
+                    while (currMem < memory) {
+                        currMem += 100;
+                        sysinfo[2] = Math.min(currMem, memory) + "KB";
+                        pane.repaint();
+                    }
+                    sysinfo[2] = memory + "KB OK";
+                    pane.repaint();
 
-            //CLI hover cursor
-            boolean textHover = false;
-            for (int i = 0; i < windows.size(); i++) {
-                Rectangle bounds = windows.get(i).bounds;
-                Rectangle bar = windows.get(i).titleBar;
-                if (windows.get(i).type== MetaWindow.WindowType.CMD&&windows.get(i).focused&&new Rectangle(bounds.x,bounds.y+bar.height*2,bounds.width,bounds.height-bar.height).contains(Bert.mBert.input.mouseLocation)) {
-                    textHover = true;
-                    break;
+                    //Wait for sound to stop
+                    while (true) {
+                        Thread.sleep(1);
+                        if (bootSoundPlayer.length() - bootSoundPlayer.position() <= 0) {
+                            break;
+                        }
+                    }
+                    bootSoundPlayer.close();
+
+                    //Go to desktop
+                    setScreen(Screen.DESKTOP);
+                    OSSoundPlayer = Bert.mBert.minim.loadFile(Utilities.getResourceAsFile("osstart.wav").getPath());
+                    OSSoundPlayer.play();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }
-            if (textHover) {
-                setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-            } else {
-                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            }
+                break;
+            case DESKTOP:
+
+                //Determine if resize cursor is appropriate
+                edgeHover = new boolean[4];
+                for (int i = 0; i < windows.size(); i++) {
+                    windows.get(i).update();
+                }
+                if (windows.size() > 0) {
+                    for (int j = 0; j < 4; j++) {
+                        if (windows.get(windows.size() - 1).edgeHovers[j] && windows.get(windows.size() - 1).resizable)
+                            edgeHover[j] = true;
+                    }
+                }
+                if ((edgeHover[0] && edgeHover[2]) || (edgeHover[1] && edgeHover[3])) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
+                } else if ((edgeHover[0] && edgeHover[3]) || (edgeHover[1] && edgeHover[2])) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
+                } else if (edgeHover[0] || edgeHover[1]) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+                } else if (edgeHover[2] || edgeHover[3]) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
+                } else {
+
+                    //CLI/Notepad hover cursor
+                    boolean textHover = false;
+                    for (int i = 0; i < windows.size(); i++) {
+                        Rectangle bounds = windows.get(i).bounds;
+                        Rectangle bar = windows.get(i).titleBar;
+                        if ((windows.get(i).type == MetaWindow.WindowType.CMD || windows.get(i).type == MetaWindow.WindowType.NOTEPAD) && windows.get(i).focused && new Rectangle(bounds.x, bounds.y + bar.height * 3, bounds.width, bounds.height - bar.height * 2).contains(Bert.mBert.input.mouseLocation)) {
+                            textHover = true;
+                            break;
+                        }
+                    }
+                    if (textHover) {
+                        setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+                    } else {
+                        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    }
+                }
+                break;
         }
     }
 
@@ -379,7 +397,7 @@ public class PCInterface extends GameInterface implements Runnable{
         }
 
         //Play shutdown music
-        shutDownPlayer = Bert.mBert.minim.loadFile(Bert.getResourceAsFile("shutdown.wav").getPath());
+        shutDownPlayer = Bert.mBert.minim.loadFile(Utilities.getResourceAsFile("shutdown.wav").getPath());
         shutDownPlayer.setGain(0.25f);
         shutDownPlayer.play();
         Bert.mBert.interfaces.remove(Bert.mBert.interfaces.indexOf(this));
@@ -389,12 +407,13 @@ public class PCInterface extends GameInterface implements Runnable{
     @Override
     public void run() {
 
-        //Run Boot Screen
-        boot();
-
         //Main loop
         while (Bert.mBert.interfaces.contains(this)) {
-            step();
+            long time = System.currentTimeMillis();
+            if(next<=time) {
+                step();
+                next = time + 1000 / TPS;
+            }
             draw();
         }
     }

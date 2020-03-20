@@ -1,8 +1,11 @@
 package dev.exvaccum.bert.control;
 
 import dev.exvaccum.bert.Bert;
+import dev.exvaccum.bert.world.interfaces.GameInterface;
 import dev.exvaccum.bert.world.interfaces.PCInterface;
 import dev.exvaccum.bert.world.interfaces.pc.MetaWindow;
+import dev.exvaccum.bert.world.interfaces.pc.Notepad;
+import dev.exvaccum.bert.world.interfaces.pc.files.MetaFile;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -39,36 +42,66 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-
     }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KEY_INTERACT){
+        if(Bert.mBert.controller == Bert.ControllerObj.COMPUTER) {
+            for (int i = 0; i < Bert.mBert.interfaces.size(); i++) {
+                GameInterface gi = Bert.mBert.interfaces.get(i);
+                if(((PCInterface)gi).windows!=null){
+                    for (int j = 0; j < ((PCInterface)gi).windows.size(); j++) {
+                        MetaWindow win = ((PCInterface)gi).windows.get(j);
+                        if(win.type== MetaWindow.WindowType.NOTEPAD&&win.focused){
+                            if(keyEvent.getKeyCode()==KeyEvent.VK_BACK_SPACE) {
+                                ((Notepad) win).deleteChar();
+                            }else if(keyEvent.getKeyCode()==KeyEvent.VK_ENTER) {
+                                ((Notepad) win).newLine(keyEvent);
+                            }else if(keyEvent.getKeyCode()==KeyEvent.VK_UP) {
+                                ((Notepad) win).nav(0,-1);
+                            }else if(keyEvent.getKeyCode()==KeyEvent.VK_DOWN) {
+                                ((Notepad) win).nav(0,1);
+                            }else if(keyEvent.getKeyCode()==KeyEvent.VK_LEFT) {
+                                ((Notepad) win).nav(-1,0);
+                            }else if(keyEvent.getKeyCode()==KeyEvent.VK_RIGHT) {
+                                ((Notepad) win).nav(1,0);
+                            }else if(keyEvent.isControlDown()) {
+                                ((Notepad) win).shortCut(keyEvent);
+                            }else{
+                                ((Notepad) win).typeChar(keyEvent);
+                            }
+                        }
+                    }
+                }
+            }
         }
-        if (keyEvent.getKeyCode() == KEY_BACK){
+        if(Bert.mBert.controller == Bert.ControllerObj.PLAYER) {
+            if (keyEvent.getKeyCode() == KEY_INTERACT) {
+            }
+            if (keyEvent.getKeyCode() == KEY_BACK) {
 
-        }
-        if (keyEvent.getKeyCode() == KEY_UP) {
-            Bert.mBert.world.player.u = 1;
-        }
-        if (keyEvent.getKeyCode() == KEY_DOWN){
-            Bert.mBert.world.player.d = 1;
+            }
+            if (keyEvent.getKeyCode() == KEY_UP) {
+                Bert.mBert.world.player.u = 1;
+            }
+            if (keyEvent.getKeyCode() == KEY_DOWN) {
+                Bert.mBert.world.player.d = 1;
 
-        }
-        if (keyEvent.getKeyCode() == KEY_LEFT){
-            Bert.mBert.world.player.l = 1;
+            }
+            if (keyEvent.getKeyCode() == KEY_LEFT) {
+                Bert.mBert.world.player.l = 1;
 
-        }
-        if (keyEvent.getKeyCode() == KEY_RIGHT){
-            Bert.mBert.world.player.r = 1;
+            }
+            if (keyEvent.getKeyCode() == KEY_RIGHT) {
+                Bert.mBert.world.player.r = 1;
 
+            }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        if(Bert.mBert.player!=null) {
+        if (Bert.mBert.controller == Bert.ControllerObj.PLAYER) {
 
             //Interactions with room objects
             if (keyEvent.getKeyCode() == KEY_INTERACT) {
@@ -155,6 +188,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                                         }
                                     }
                                 }
+                                if (w.windowDraggables != null) {
+                                    for (int m = 0; m < w.windowDraggables.size(); m++) {
+                                        WDraggable b = w.windowDraggables.get(m);
+                                        if (b.containsMouse() && b.owner.usable) {
+                                            b.performAction();
+                                            return;
+                                        }
+                                    }
+                                }
 
                                 //Handle edge hovering
                                 if (w != null && w.edgeHovers != null) {
@@ -235,39 +277,55 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
                 ArrayList<MetaWindow> windows = ((PCInterface) Bert.mBert.interfaces.get(i)).windows;
                 for (int j = 0; j < windows.size(); j++) {
                     MetaWindow w = windows.get(j);
-                    if(w!=null&&w.edgeHovers!=null) {
-                        if(w.bounds.width+locationDiff.x>180&&w.bounds.height+locationDiff.y>100) {
-                            if (resizeMode[0] && resizableWindow == w.id) {
-                                //Top-Left
-                                w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y, w.bounds.width - locationDiff.x, w.bounds.height - locationDiff.y);
-                            } else if (resizeMode[1] && resizableWindow == w.id) {
-                                //Bottom-Left
-                                w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height + locationDiff.y);
-                            } else if (resizeMode[2] && resizableWindow == w.id) {
-                                //Top-Right
-                                w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width + locationDiff.x, w.bounds.height - locationDiff.y);
-                            } else if (resizeMode[3] && resizableWindow == w.id) {
-                                //Bottom-Right
-                                w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height + locationDiff.y);
-                            } else if (resizeMode[4] && resizableWindow == w.id) {
-                                //Left
-                                w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height);
-                            } else if (resizeMode[5] && resizableWindow == w.id) {
-                                //Right
-                                w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height);
-                            } else if (resizeMode[6] && resizableWindow == w.id) {
-                                //Top
-                                w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width, w.bounds.height - locationDiff.y);
-                            } else if (resizeMode[7] && resizableWindow == w.id) {
-                                //Bottom
-                                w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width, w.bounds.height + locationDiff.y);
+                    //Interact with buttons within this window
+                    if (w.focused&&w.windowDraggables != null) {
+                        for (int m = 0; m < w.windowDraggables.size(); m++) {
+                            WDraggable b = w.windowDraggables.get(m);
+                            if (b.containsMouse() && b.owner.usable) {
+                                b.performAction();
+                                return;
                             }
-                        } if (resizeMode[8] && !resizeMode[6] && resizableWindow == w.id) {
-                            //Moving
-                            if (w.owner.getBounds().contains(getMouseLocation().x, getMouseLocation().y))
-                                w.bounds.setLocation(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y);
-                            else resizableWindow = -1;
                         }
+                    }
+                    if(w!=null&&w.edgeHovers!=null) {
+                        if (resizeMode[0] && resizableWindow == w.id) {
+                            //Top-Left
+                            if(w.bounds.width-locationDiff.x>180&&w.bounds.height-locationDiff.y>100)
+                            w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y, w.bounds.width - locationDiff.x, w.bounds.height - locationDiff.y);
+                        } else if (resizeMode[1] && resizableWindow == w.id) {
+                            //Bottom-Left
+                            if(w.bounds.width-locationDiff.x>180&&w.bounds.height+locationDiff.y>100)
+                            w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height + locationDiff.y);
+                        } else if (resizeMode[2] && resizableWindow == w.id) {
+                            //Top-Right
+                            if(w.bounds.width+locationDiff.x>180&&w.bounds.height-locationDiff.y>100)
+                            w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width + locationDiff.x, w.bounds.height - locationDiff.y);
+                        } else if (resizeMode[3] && resizableWindow == w.id) {
+                            //Bottom-Right
+                            if(w.bounds.width+locationDiff.x>180&&w.bounds.height+locationDiff.y>100)
+                            w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height + locationDiff.y);
+                        } else if (resizeMode[4] && resizableWindow == w.id) {
+                            //Left
+                            if(w.bounds.width-locationDiff.x>180)
+                            w.bounds.setBounds(w.bounds.x + locationDiff.x, w.bounds.y, w.bounds.width - locationDiff.x, w.bounds.height);
+                        } else if (resizeMode[5] && resizableWindow == w.id) {
+                            //Right
+                            if(w.bounds.width+locationDiff.x>180)
+                            w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width + locationDiff.x, w.bounds.height);
+                        } else if (resizeMode[6] && resizableWindow == w.id) {
+                            //Top
+                            if(w.bounds.height-locationDiff.y>100)
+                            w.bounds.setBounds(w.bounds.x, w.bounds.y + locationDiff.y, w.bounds.width, w.bounds.height - locationDiff.y);
+                        } else if (resizeMode[7] && resizableWindow == w.id) {
+                            //Bottom
+                            if(w.bounds.height+locationDiff.y>100)
+                            w.bounds.setBounds(w.bounds.x, w.bounds.y, w.bounds.width, w.bounds.height + locationDiff.y);
+                        }
+                    } if (resizeMode[8] && !resizeMode[6] && resizableWindow == w.id) {
+                        //Moving
+                        if (w.owner.getBounds().contains(getMouseLocation().x, getMouseLocation().y))
+                            w.bounds.setLocation(w.bounds.x + locationDiff.x, w.bounds.y + locationDiff.y);
+                        else resizableWindow = -1;
                     }
                 }
             }

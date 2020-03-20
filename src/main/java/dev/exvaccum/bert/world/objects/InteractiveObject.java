@@ -2,7 +2,9 @@ package dev.exvaccum.bert.world.objects;
 
 import dev.exvaccum.bert.Bert;
 import dev.exvaccum.bert.control.Input;
+import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.world.rooms.Room;
+import javafx.geometry.Insets;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,7 +18,7 @@ public abstract class InteractiveObject extends GameObject {
     static BufferedImage buttonBgimg;
     static {
         try {
-            buttonBgimg = ImageIO.read(Bert.getResourceAsFile("buttonBg.png"));
+            buttonBgimg = ImageIO.read(Utilities.getResourceAsFile("buttonBg.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +62,7 @@ public abstract class InteractiveObject extends GameObject {
         super.paintGraphics(g2, progress);
 
         //Display prompt if player is close
-        if(isClose()){
+        if(room!=null&&room.getInteractiveObjectClosestToPlayer()==this){
             g2.drawImage(buttonBgimg,(int)getBounds().getCenterX()-32,y-84,64, 64,null);
             g2.setFont(Bert.mBert.h2Font);
             g2.drawString(KeyEvent.getKeyText(Input.KEY_INTERACT), (int)getBounds().getCenterX()-8, y-32);
