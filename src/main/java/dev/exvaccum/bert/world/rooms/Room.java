@@ -1,16 +1,16 @@
 package dev.exvaccum.bert.world.rooms;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.environment.light.LightingSystem;
 import dev.exvaccum.bert.world.objects.GameObject;
 import dev.exvaccum.bert.world.objects.InteractiveObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
-public class Room extends JDialog implements ComponentListener, MouseListener {
+public class Room extends JDialog implements ComponentListener {
 
     //List of objects in the room
     private ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -25,9 +25,6 @@ public class Room extends JDialog implements ComponentListener, MouseListener {
     public int dx, dy;
     World world;
     public String title = "Room";
-
-    //Lighting
-    public LightingSystem lightingSystem;
 
     /**
      * Basic room class, player-visitable area
@@ -47,7 +44,6 @@ public class Room extends JDialog implements ComponentListener, MouseListener {
         //Hide on close, will cause game to end when closed
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         addComponentListener(this);
-        addMouseListener(this);
 
         //Disable resize
         setResizable(false);
@@ -62,9 +58,6 @@ public class Room extends JDialog implements ComponentListener, MouseListener {
 
         //Calibrate position
         reCalibrate();
-
-        //Initiate lighting system
-        lightingSystem = new LightingSystem(this);
     }
 
     /**
@@ -99,8 +92,6 @@ public class Room extends JDialog implements ComponentListener, MouseListener {
      * Handle game logic
      */
     public void update(){
-        objects.forEach(object -> {object.update();});
-        lightingSystem.update();
     }
 
     /**
@@ -134,7 +125,7 @@ public class Room extends JDialog implements ComponentListener, MouseListener {
                 dx = oldLocation.x-getLocation().x;
                 dy = oldLocation.y-getLocation().y;
                 oldLocation = getLocation();
-                Bert.mBert.world.player.position = new Point(Bert.mBert.world.player.position.x-dx, Bert.mBert.world.player.position.y-dy);
+                Bert.mBert.world.player.setLocation(Bert.mBert.world.player.getLocation().x-dx, Bert.mBert.world.player.getLocation().y-dy);
                 Bert.mBert.world.updateCurrentRoom();
             }
         }
@@ -148,31 +139,6 @@ public class Room extends JDialog implements ComponentListener, MouseListener {
     @Override
     public void componentHidden(ComponentEvent componentEvent) {
         System.exit(0);
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-        Bert.mBert.controller= Bert.ControllerObj.PLAYER;
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
     }
 
     class Pane extends JPanel{

@@ -1,10 +1,12 @@
 package dev.exvaccum.bert.world.interfaces.pc.files;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.control.WButton;
 import dev.exvaccum.bert.world.interfaces.PCInterface;
-import dev.exvaccum.bert.world.interfaces.pc.*;
+import dev.exvaccum.bert.world.interfaces.pc.FileBrowser;
+import dev.exvaccum.bert.world.interfaces.pc.ImageViewer;
+import dev.exvaccum.bert.world.interfaces.pc.MetaWindow;
+import dev.exvaccum.bert.world.interfaces.pc.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,10 +29,10 @@ public class MetaFile extends WButton {
     static BufferedImage image, audio, doc,folder;
     static {
         try {
-            image = ImageIO.read(Utilities.getResourceAsFile("image.png"));
-            audio = ImageIO.read(Utilities.getResourceAsFile("music.png"));
-            doc = ImageIO.read(Utilities.getResourceAsFile("doc.png"));
-            folder = ImageIO.read(Utilities.getResourceAsFile("folder.png"));
+            image = ImageIO.read(Bert.getResourceAsFile("image.png"));
+            audio = ImageIO.read(Bert.getResourceAsFile("music.png"));
+            doc = ImageIO.read(Bert.getResourceAsFile("doc.png"));
+            folder = ImageIO.read(Bert.getResourceAsFile("folder.png"));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -45,7 +47,6 @@ public class MetaFile extends WButton {
     static {
         pathMap.put("me.png","pc/playerStrip.png");
         pathMap.put("church.wav","pc/wonderwall.wav");
-        pathMap.put("sample.txt", "pc/sample.txt");
     }
 
     /**
@@ -112,7 +113,7 @@ public class MetaFile extends WButton {
         switch (type){
             case IMAGE:
                 try {
-                    BufferedImage image = ImageIO.read(Utilities.getResourceAsFile(pathMap.get(fname)));
+                    BufferedImage image = ImageIO.read(Bert.getResourceAsFile(pathMap.get(fname)));
                     ownerWindow.owner.windows.add(new ImageViewer(64,64,image.getWidth(),image.getHeight(),(PCInterface)owner,fname));
                 }catch (IOException e){
                     e.printStackTrace();
@@ -120,9 +121,6 @@ public class MetaFile extends WButton {
                 break;
             case AUDIO:
                 ownerWindow.owner.windows.add(new SoundPlayer(64,64,180,100,(PCInterface)owner,fname));
-                break;
-            case DOCUMENT:
-                ownerWindow.owner.windows.add(new Notepad(64,64,180,100,(PCInterface)owner,fname));
                 break;
         }
     }

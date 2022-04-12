@@ -1,8 +1,10 @@
 package dev.exvaccum.bert.world.rooms;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.Utilities;
-import dev.exvaccum.bert.world.objects.*;
+import dev.exvaccum.bert.world.objects.Bed;
+import dev.exvaccum.bert.world.objects.Desk;
+import dev.exvaccum.bert.world.objects.GameObject;
+import dev.exvaccum.bert.world.objects.Painting;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,7 +24,7 @@ public class Bedroom extends Room{
 
         //Load background
         try {
-            bg = ImageIO.read(Utilities.getResourceAsFile("bg.png"));
+            bg = ImageIO.read(Bert.getResourceAsFile("bg.png"));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -37,17 +39,6 @@ public class Bedroom extends Room{
         getObjects().add(new Bed(16,250,this));
         getObjects().add(new Desk(400, 260, this));
         getObjects().add(new Painting(300, 200, this));
-        getObjects().add(new Switch(550, 300,this){
-            @Override
-            public void onAction(){
-                Bedroom.this.lightingSystem.ambientLevel = 1.0f;
-            }
-            @Override
-            public void offAction(){
-                Bedroom.this.lightingSystem.ambientLevel = 0.05f;
-            }
-        });
-        getObjects().add(new BedsideLamp(150,260,this));
 
         //Recalibrate location
         reCalibrate();
@@ -60,6 +51,5 @@ public class Bedroom extends Room{
             GameObject o = getObjects().get(i);
             o.paintGraphics(g2, 0);
         }
-        lightingSystem.draw(g2);
     }
 }

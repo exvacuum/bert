@@ -1,7 +1,6 @@
 package dev.exvaccum.bert.world.objects;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.world.rooms.Room;
 
 import javax.imageio.ImageIO;
@@ -19,7 +18,7 @@ public class Bed extends GameObject{
 
     void init(){
         try{
-            img = ImageIO.read(Utilities.getResourceAsFile("bed.png"));
+            img = ImageIO.read(Bert.getResourceAsFile("bed.png"));
         }catch (IOException e){
             e.printStackTrace();
         }

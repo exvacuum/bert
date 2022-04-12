@@ -66,8 +66,8 @@ public class World extends ArrayList<Room> {
     public Room updateCurrentRoom() {
         for (int i = 0; i < this.size(); i++) {
             if(player!=null)
-            if(roomBounds.get(i).contains(player.getBounds().getCenterX(), player.getBounds().getCenterY())){
-                player.relPos = new Point(player.position.x- this.get(i).getLocation().x,player.position.y-this.get(i).getLocation().y);
+            if(roomBounds.get(i).contains(player.getBBox())){
+                player.relPos = new Point(player.getLocation().x- this.get(i).getLocation().x,player.getLocation().y-this.get(i).getLocation().y);
                 currentRoom = this.get(i);
                 return this.get(i);
             }

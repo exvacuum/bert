@@ -1,7 +1,6 @@
 package dev.exvaccum.bert.player;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.sprites.SpriteEngine;
 import dev.exvaccum.bert.sprites.SpriteSheet;
 import dev.exvaccum.bert.sprites.SpriteSheetBuilder;
@@ -17,8 +16,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.function.BiFunction;
 
 public class Player extends JDialog implements FocusListener {
 
@@ -41,7 +38,6 @@ public class Player extends JDialog implements FocusListener {
 
     //Position relative to
     public Point relPos;
-    public Point position = new Point(0,0);
 
     //Input directions
     public int u,d,l,r;
@@ -72,7 +68,7 @@ public class Player extends JDialog implements FocusListener {
 
         //Startup sprite engine
         try {
-            BufferedImage img = ImageIO.read(Utilities.getResourceAsFile("playerStrip.png"));
+            BufferedImage img = ImageIO.read(Bert.getResourceAsFile("playerStrip.png"));
             sheet = new SpriteSheetBuilder().
                     withSheet(img).
                     withColumns(4).
@@ -105,8 +101,7 @@ public class Player extends JDialog implements FocusListener {
         pane.setOpaque(false);
         add(pane);
         addFocusListener(this);
-        position = new Point(Toolkit.getDefaultToolkit().getScreenSize().width/2-getWidth()/2-60,Toolkit.getDefaultToolkit().getScreenSize().height/2-getHeight()/2+130);
-        setLocation(position);
+        setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-getWidth()/2-60,Toolkit.getDefaultToolkit().getScreenSize().height/2-getHeight()/2+130);
         setVisible(true);
 
         //Focus this
@@ -116,10 +111,7 @@ public class Player extends JDialog implements FocusListener {
     public void paint(Graphics2D g2, double progress) {
 
         //Draw player sprite
-        BufferedImage subImg = sheet.getSprite(progress);
-        g2.drawImage(subImg, 0-(sheet.getSprite(progress).getWidth()*Math.min(0,xScale)), 0,sheet.getSprite(progress).getWidth()*xScale,sheet.getSprite(progress).getHeight(), null);
-        if(Bert.mBert.world.currentRoom!=null)g2.setComposite(AlphaComposite.getInstance(Transparency.TRANSLUCENT,(1-Bert.mBert.world.currentRoom.lightingSystem.ambientLevel)));
-        g2.drawImage(Utilities.getSilhouette(subImg), 0-(sheet.getSprite(progress).getWidth()*Math.min(0,xScale)), 0,sheet.getSprite(progress).getWidth()*xScale,sheet.getSprite(progress).getHeight(), null);
+        g2.drawImage(sheet.getSprite(progress), 0-(sheet.getSprite(progress).getWidth()*Math.min(0,xScale)), 0,sheet.getSprite(progress).getWidth()*xScale,sheet.getSprite(progress).getHeight(), null);
 
         if(Bert.debug) {
             g2.setColor(Color.BLUE);
@@ -128,7 +120,6 @@ public class Player extends JDialog implements FocusListener {
             g2.setColor(Color.RED);
             g2.drawRect(0, 0, getWidth(), getHeight());
         }
-        bounds = new Rectangle((int)position.getX()+16,(int)position.getY()+32,64,128);
     }
 
     public Rectangle getBBox(){
@@ -146,18 +137,15 @@ public class Player extends JDialog implements FocusListener {
             Room currentRoom = Bert.mBert.world.updateCurrentRoom();
             switch (controlState){
                 case PLATFORMER:
-                    Point oldLocation = getLocation();
-                    position = new Point(getX()+((r-l)*vel),getY());
-                    if(!new Rectangle(currentRoom.getX(),currentRoom.getY(),currentRoom.getWidth(),currentRoom.getHeight()).contains(new Rectangle((int)(getBBox().getX()+((r-l)*vel)),(int)(getBBox().getY()),getBBox().width,getBBox().height))) position = oldLocation;
+                    if(new Rectangle(currentRoom.getX(),currentRoom.getY(),currentRoom.getWidth(),currentRoom.getHeight()).contains(new Rectangle((int)(getBBox().getX()+((r-l)*vel)),(int)(getBBox().getY()),getBBox().width,getBBox().height)))
+                    setLocation(getX()+((r-l)*vel),getY());
                     break;
                 case FLYING:
-                    position = new Point(getX()+((r-l)*vel),getY()+((d-u)*vel));
+                    setLocation(getX()+((r-l)*vel),getY()+((d-u)*vel));
                     break;
             }
         }
-
-        setLocation(position);
-        Bert.mBert.world.updateCurrentRoom();
+        bounds = new Rectangle(getX()+16,getY()+32,64,128);
     }
 
     @Override

@@ -1,9 +1,7 @@
 package dev.exvaccum.bert.world.interfaces.pc;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.control.WButton;
-import dev.exvaccum.bert.control.WDraggable;
 import dev.exvaccum.bert.world.interfaces.PCInterface;
 
 import javax.imageio.ImageIO;
@@ -21,9 +19,7 @@ public class MetaWindow{
         CMD,
         PIP,
         FILES,
-        IMAGE_VIEWER,
-        NOTEPAD,
-        DIALOG
+        IMAGE_VIEWER
     }
 
     //Incrementing int for assigning unique ids to the windows
@@ -45,7 +41,7 @@ public class MetaWindow{
     static BufferedImage closeIcon;
     static{
         try{
-            closeIcon = ImageIO.read(Utilities.getResourceAsFile("closeicon.png"));
+            closeIcon = ImageIO.read(Bert.getResourceAsFile("closeicon.png"));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -54,7 +50,6 @@ public class MetaWindow{
 
     //Window GUI buttons
     public ArrayList<WButton> windowButtons = new ArrayList<>();
-    public ArrayList<WDraggable> windowDraggables = new ArrayList<>();
 
     //Window edge bounds
     Rectangle[] edges;
@@ -88,7 +83,6 @@ public class MetaWindow{
         closeButton = new WButton(x+width-20,y,20,20, this){
             {
                 setImg(closeIcon);
-                setBordered(false);
             }
 
             @Override

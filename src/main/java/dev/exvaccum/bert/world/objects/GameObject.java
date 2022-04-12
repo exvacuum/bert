@@ -1,8 +1,6 @@
 package dev.exvaccum.bert.world.objects;
 
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.environment.light.Light;
-import dev.exvaccum.bert.control.environment.light.LightSource;
 import dev.exvaccum.bert.world.rooms.Room;
 
 import java.awt.*;
@@ -14,7 +12,6 @@ public abstract class GameObject {
     public Room room;
     int x,y;
     BufferedImage img;
-    public Light light;
 
     /**
      * Create new object in a specified room
@@ -22,7 +19,6 @@ public abstract class GameObject {
      */
     public GameObject(Room room){
         this.room = room;
-        if(this instanceof LightSource) light = new Light(this);
     }
 
     /**
@@ -39,8 +35,6 @@ public abstract class GameObject {
             g2.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
         }
     };
-
-    public void update(){};
 
     /**
      * @return object bounds

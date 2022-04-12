@@ -53,7 +53,7 @@ public class FileBrowser extends MetaWindow {
                     new NavUp(FileBrowser.this),
                     new MetaDirectory(FileBrowser.this,"School", new MetaFile[][]{{
                             new NavUp(FileBrowser.this),
-                            new MetaFile(FileBrowser.this,"sample.txt", MetaFile.FileType.DOCUMENT)}
+                            new MetaFile(FileBrowser.this,"philosophy.txt", MetaFile.FileType.DOCUMENT)}
                     }),
                     new MetaDirectory(FileBrowser.this,"Notes", new MetaFile[][]{{
                             new NavUp(FileBrowser.this),
@@ -63,7 +63,7 @@ public class FileBrowser extends MetaWindow {
                             new NavUp(FileBrowser.this),
                             new MetaFile(FileBrowser.this,"VOID VOID VOID", MetaFile.FileType.DOCUMENT)}
                     }),
-                    new MetaFile(FileBrowser.this,"sample.txt", MetaFile.FileType.DOCUMENT)}
+                    new MetaFile(FileBrowser.this,"egg.txt", MetaFile.FileType.DOCUMENT)}
                 })
             }
         };

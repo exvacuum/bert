@@ -4,9 +4,7 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.analysis.BeatDetect;
 import ddf.minim.analysis.FFT;
 import dev.exvaccum.bert.Bert;
-import dev.exvaccum.bert.control.Utilities;
 import dev.exvaccum.bert.control.WButton;
-import dev.exvaccum.bert.control.WDraggable;
 import dev.exvaccum.bert.world.interfaces.PCInterface;
 import dev.exvaccum.bert.world.interfaces.pc.files.MetaFile;
 
@@ -23,13 +21,12 @@ public class SoundPlayer extends MetaWindow {
     BeatDetect beatDetect;
 
     //Controls
-    WButton playbackButton;
-    WDraggable barButton;
+    WButton playbackButton, barButton;
     static BufferedImage pauseIcon, playIcon;
     static{
         try {
-            pauseIcon = ImageIO.read(Utilities.getResourceAsFile("pauseicon.png"));
-            playIcon = ImageIO.read(Utilities.getResourceAsFile("playicon.png"));
+            pauseIcon = ImageIO.read(Bert.getResourceAsFile("pauseicon.png"));
+            playIcon = ImageIO.read(Bert.getResourceAsFile("playicon.png"));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -52,7 +49,7 @@ public class SoundPlayer extends MetaWindow {
         resizable = true;
 
         //Load audio
-        audio = Bert.mBert.minim.loadFile(Utilities.getResourceAsFile(MetaFile.pathMap.get(fname)).getPath(),1024);
+        audio = Bert.mBert.minim.loadFile(Bert.getResourceAsFile(MetaFile.pathMap.get(fname)).getPath(),1024);
         fft = new FFT(audio.bufferSize(),audio.sampleRate());
         beatDetect = new BeatDetect();
         beatDetect.detectMode(BeatDetect.SOUND_ENERGY);
@@ -76,7 +73,7 @@ public class SoundPlayer extends MetaWindow {
             }
         };
 
-        barButton = new WDraggable(bounds.x+24,bounds.y+bounds.height-20,bounds.width-24,16, this){
+        barButton = new WButton(bounds.x+24,bounds.y+bounds.height-20,bounds.width-24,16, this){
             {
                 setBgC(new Color(0,0,0,0));
                 setText("");
@@ -90,7 +87,7 @@ public class SoundPlayer extends MetaWindow {
         };
 
         windowButtons.add(playbackButton);
-        windowDraggables.add(barButton);
+        windowButtons.add(barButton);
 
         audio.play();
 
